@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy Birthday OS</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/xp.css">
+
+    <style>
+        /* Тут наши кастомные стили */
+        body {
+    /* Tahoma - тот самый шрифт XP. Если его нет в Linux, берем похожий */
+    font-family: 'Tahoma', 'Verdana', sans-serif;
+    /* Отключаем сглаживание шрифта для "пиксельности" */
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: grayscale;
+    /* Убираем отступы, чтобы бар прилип к низу */
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100vh;
+    background: url('bg.jpeg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+        /* Сетка для иконок на рабочем столе */
+        .desktop {
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-content: flex-start;
+        }
+
+        /* Стиль иконки */
+        .icon {
+            width: 80px;
+            text-align: center;
+            cursor: pointer;
+            color: white;
+            text-shadow: 1px 1px 2px black; /* Тень текста, чтобы читалось на фоне */
+        }
+        
+        .icon img {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 5px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Окно (скрыто по умолчанию) */
+        .window-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%; /* На телефоне займет почти всю ширину */
+            max-width: 450px; /* На компе не будет огромным */
+            display: none; /* Скрыто */
+            z-index: 100;
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.2); /* Тень окна */
+        }
+
+        .window-body {
+            background: #ECE9D8; /* Цвет фона окон XP */
+            max-height: 60vh; /* Чтобы окно не уходило за экран если много текста */
+            overflow-y: auto; /* Скролл внутри окна */
+        }
+
+        /* Кнопка Пуск (для красоты внизу) */
+        .taskbar {
+            position: fixed;
+            bottom: 0; /* Прибиваем к самому низу */
+            left: 0;
+            width: 100%;
+            height: 30px; /* Высота как в оригинале XP */
+            background: linear-gradient(to bottom, #245edb 0%, #3f8cf3 9%, #245edb 18%, #245edb 92%, #333 100%);
+            border-top: 1px solid #fff; /* Белая полоска сверху */
+            display: flex;
+            align-items: center;
+            padding-left: 0; /* Убираем лишний отступ */
+            z-index: 9999; /* Поверх всего */
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+            }
+        
+        .start-btn {
+            /* Ссылка на твою скачанную иконку */
+            background-image: url('icon2.png'); 
+            background-repeat: no-repeat;
+            background-position: 5px center; /* Иконка слева */
+            background-size: 20px 20px; /* Размер иконки */
+    
+            background-color: #3f9c28; /* Зеленый цвет */
+            /* Тень и градиент для объема */
+            box-shadow: inset 0px 1px 0px rgba(255,255,255,0.5), 2px 2px 3px rgba(0,0,0,0.3);
+            border: 1px solid #005500; /* Темная рамка */
+            border-radius: 0 10px 10px 0; /* Закругление справа */
+    
+            color: white;
+            font-weight: bold;
+            font-style: italic;
+            font-size: 14px;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+    
+            padding: 3px 15px 3px 30px; /* Отступ слева больше (под иконку) */
+            margin-left: 0;
+            cursor: pointer;
+            height: 100%; /* На всю высоту бара */
+            display: flex;
+            align-items: center;
+        }
+        .start-btn:hover {
+            background-color: #4eba34; /* Светлеет при наведении */
+        }
+        /* === ЧАСЫ (Трей) === */
+        .tray-clock {
+            background-color: #0b77e9; /* Голубой фон трея */
+            border-left: 1px solid #0831d9;
+            padding: 0 15px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+         font-size: 12px;
+            margin-left: auto; /* Отодвигает часы в самый правый угол */
+         box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2); /* Вдавленность */
+        }
+        /* === СТИЛЬ ГАЛЕРЕИ (ЧТОБЫ БЫЛО СЕТКОЙ) === */
+        .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 10px;
+        padding: 10px;
+        }
+        .gallery-item {
+        width: 100%;
+        height: 100px;
+        object-fit: cover;
+        border: 2px solid white;
+        cursor: pointer;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+}
+
+/* === СТИЛЬ ЧАТА ICQ === */
+.icq-message {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    border-bottom: 1px dashed #ccc;
+    padding-bottom: 10px;
+}
+.icq-avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    border: 1px solid gray;
+    object-fit: cover;
+}
+.icq-name {
+    font-weight: bold;
+    color: blue;
+    display: block;
+}
+    </style>
+</head>
+<body>
+
+    <div class="desktop">
+        
+        <div class="icon" onclick="openWindow('window-friends')">
+            <img src="icq.png" alt="ICQ">
+            <span>Друзья</span>
+        </div>
+
+        <div class="icon" onclick="openWindow('window-letter')">
+            <img src="notepad.png" alt="Notepad" style="transform: scale(2.2);">
+            <span>ReadMe.txt</span>
+        </div>
+
+        <div class="icon" onclick="openWindow('window-gallery')">
+            <img src="my_computer.ico" alt="PC">
+            <span>Мой мир</span>
+        </div>
+        <div class="icon" onclick="openWindow('window-music')">
+        <img src="winamp.png" alt="Winamp">
+        <span>Winamp</span>
+    </div>
+
+    </div>
+
+ <div class="taskbar">
+    <div class="start-btn">Start</div>
+    
+    <div class="tray-clock" id="clock">
+        00:00
+    </div>
+</div>
+    
+    <div class="window window-popup" id="window-friends">
+    <div class="title-bar">
+        <div class="title-bar-text">ICQ - Friends List</div>
+        <div class="title-bar-controls"><button aria-label="Close" onclick="closeWindow('window-friends')"></button></div>
+    </div>
+    <div class="window-body" style="height: 300px; overflow-y: auto; background: white;">
+        
+        <div class="icq-message">
+            <img src="masha.jpg" class="icq-avatar"> <div>
+                <span class="icq-name">Маша (Bestie)</span>
+                <span>С днюхой! Ты лучшая! &lt;3</span>
+            </div>
+        </div>
+
+        <div class="icq-message">
+            <img src="cat.jpg" class="icq-avatar">
+            <div>
+                <span class="icq-name">Кот Барсик</span>
+                <span>Мяу мяу с днем рождения!</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="window window-popup" id="window-gallery">
+    <div class="title-bar">
+        <div class="title-bar-text">C:\My_Heart\Images</div>
+        <div class="title-bar-controls"><button aria-label="Close" onclick="closeWindow('window-gallery')"></button></div>
+    </div>
+    <div class="window-body">
+        <div class="gallery-grid">
+            <img src="1.jpg" class="gallery-item" onclick="viewPhoto(this)">
+            <img src="2.jpg" class="gallery-item" onclick="viewPhoto(this)">
+            <img src="3.jpg" class="gallery-item" onclick="viewPhoto(this)">
+        </div>
+    </div>
+</div>
+
+<div class="window window-popup" id="window-music" style="width: 300px;">
+    <div class="title-bar">
+        <div class="title-bar-text">Winamp</div>
+        <div class="title-bar-controls"><button aria-label="Close" onclick="closeWindow('window-music')"></button></div>
+    </div>
+    <div class="window-body" style="background: black; color: #00ff00; text-align: center;">
+        <p>Now Playing: С ДНЕМ РОЖДЕНИЯ!!!!</p>
+        <audio controls style="width: 100%;">
+            <source src="С ДНЕМ РОЖДЕНИЯ.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+</div>
+
+<div class="window window-popup" id="window-letter">
+    <div class="title-bar">
+        <div class="title-bar-text">ReadMe.txt</div>
+        <div class="title-bar-controls"><button aria-label="Close" onclick="closeWindow('window-letter')"></button></div>
+    </div>
+    <div class="window-body" style="background: white; font-family: 'Courier New'; padding: 15px;">
+        <p>данила колбасенко</p>
+        <p>да ты че клянись</p>
+    </div>
+</div>
+    </div>
+
+
+    <script>
+    // 1. Открыть окно
+    function openWindow(id) {
+        // Сначала закроем все остальные, чтобы не мешали
+        document.querySelectorAll('.window-popup').forEach(w => w.style.display = 'none');
+        // Откроем нужное
+        var win = document.getElementById(id);
+        if(win) win.style.display = 'block';
+    }
+
+    // 2. Закрыть окно
+    function closeWindow(id) {
+        document.getElementById(id).style.display = 'none';
+    }
+
+    // 3. Зум фоток (Просмотр)
+    function viewPhoto(img) {
+        var overlay = document.createElement('div');
+        overlay.style = 'position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; display:flex; align-items:center; justify-content:center; cursor:pointer;';
+        overlay.onclick = function() { document.body.removeChild(overlay); }; // Закрыть по клику
+        
+        var bigImg = document.createElement('img');
+        bigImg.src = img.src;
+        bigImg.style = 'max-width:90%; max-height:90%; border:5px solid white;';
+        
+        overlay.appendChild(bigImg);
+        document.body.appendChild(overlay);
+    }
+
+    // 4. Часы
+    function updateClock() {
+        var now = new Date();
+        var h = now.getHours().toString().padStart(2, '0');
+        var m = now.getMinutes().toString().padStart(2, '0');
+        var clock = document.getElementById('clock');
+        if(clock) clock.innerText = h + ":" + m;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+    </script>
+
+</body>
+</html>
