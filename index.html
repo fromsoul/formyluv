@@ -338,12 +338,12 @@
         <span>Друзья</span>
     </div>
 
-    <div class="icon" onclick="openWindow('window-friends'); unlockAchievement('readme', 'RTFM', 'сердце любовью обливается')">
+    <div class="icon" onclick="openWindow('window-letter'); unlockAchievement('readme', 'RTFM', 'сердце любовью обливается')">
         <img src="notepad.png" alt="Notepad" style="transform: scale(2.0);">
         <span>прочитай_меня.txt</span>
     </div>
 
-    <div class="icon" onclick="openWindow('window-gallery'); unlockAchievement('pics', 'ЭЙЙЙ', 'просмотр секретных архивов.')">
+    <div class="icon"onclick="openWindow('window-gallery'); unlockAchievement('pics', 'ЭЙЙЙ', 'просмотр секретных архивов.')">
         <img src="my_computer.ico" alt="PC"> <span>Мой мир</span>
     </div>
 
@@ -409,7 +409,7 @@
     <button class="start-btn" onclick="toggleStartMenu()">
         <img src=""> Start
     </button>
-    <div id="start-menu" style="display: none; position: fixed; bottom: 45px; left: 0; width: 200px; background: white; border: 2px outset #fff; border-radius: 5px 5px 0 0; z-index: 10000; font-family: 'Tahoma', sans-serif;">
+<div id="start-menu" style="display: none; position: fixed; bottom: 45px; left: 0; width: 200px; background: white; border: 2px outset #fff; border-radius: 5px 5px 0 0; z-index: 10000; font-family: 'Tahoma', sans-serif;">
     
     <div style="background: linear-gradient(to bottom, #1c5fb0, #1c5fb0); padding: 10px; display: flex; align-items: center; color: white; font-weight: bold;">
         <img src="kisonbka.jpg" style="width: 30px; height: 30px; border: 2px solid white; border-radius: 3px; margin-right: 10px;">
@@ -418,7 +418,7 @@
 
     <div style="padding: 5px; background: white;">
         
-        <div>onclick="openWindow('window-gallery'); toggleStartMenu()" style="padding: 10px; cursor: pointer; display: flex; align-items: center; hover: background-color: #316ac5; hover: color: white;">
+        <div onclick="location.reload()" style="padding: 10px; cursor: pointer; display: flex; align-items: center; hover: background-color: #316ac5; hover: color: white;">
             <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" style="width: 20px; margin-right: 10px;">
             <span style="color: black;">My Computer</span>
         </div>
