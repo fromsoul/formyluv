@@ -8,6 +8,26 @@
     <link rel="stylesheet" href="https://unpkg.com/xp.css">
 
     <style>
+        /* === СТИЛЬ ДЛЯ МЕНЮ ПУСК === */
+.menu-item {
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: black;
+    transition: background 0.2s;
+}
+
+/* Эффект при наведении (Синий фон XP) */
+.menu-item:hover {
+    background-color: #316ac5;
+    color: white !important;
+}
+
+/* Чтобы текст внутри тоже становился белым */
+.menu-item:hover span {
+    color: white !important;
+}
         /* === АЧИВКИ (Achievements) === */
 /* === НОВАЯ ПЛАШКА АЧИВКИ (XP Style) === */
 .achievement-banner {
@@ -418,22 +438,26 @@
 
     <div style="padding: 5px; background: white;">
         
-        <div onclick="location.reload()" style="padding: 10px; cursor: pointer; display: flex; align-items: center; hover: background-color: #316ac5; hover: color: white;">
-            <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" style="width: 20px; margin-right: 10px;">
-            <span style="color: black;">My Computer</span>
-        </div>
+        <div style="padding: 5px; background: white;">
+    
+    <div class="menu-item" onclick="location.reload()">
+        <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" style="width: 20px; margin-right: 10px;">
+        <span>My Computer</span>
+    </div>
 
-        <div onclick="alert('System Status: 100% cute')" style="padding: 10px; cursor: pointer; display: flex; align-items: center;">
-            <img src="https://win98icons.alexmeub.com/icons/png/help_book_big-0.png" style="width: 20px; margin-right: 10px;">
-            <span style="color: black;">Help & Support</span>
-        </div>
+    <div class="menu-item" onclick="alert('System Status: 100% cute')">
+        <img src="https://win98icons.alexmeub.com/icons/png/help_book_big-0.png" style="width: 20px; margin-right: 10px;">
+        <span>Help & Support</span>
+    </div>
 
-        <hr style="margin: 5px 0; border: 0; border-top: 1px solid #ccc;">
+    <hr style="margin: 5px 0; border: 0; border-top: 1px solid #ccc;">
 
-        <div onclick="triggerBSOD()" style="padding: 10px; cursor: pointer; display: flex; align-items: center;">
-            <img src="https://win98icons.alexmeub.com/icons/png/shut_down_normal-2.png" style="width: 20px; margin-right: 10px;">
-            <span style="font-weight: bold; color: black;">Turn Off Computer</span>
-        </div>
+    <div class="menu-item" onclick="triggerBSOD()">
+        <img src="https://win98icons.alexmeub.com/icons/png/shut_down_normal-2.png" style="width: 20px; margin-right: 10px;">
+        <span style="font-weight: bold;">Turn Off Computer</span>
+    </div>
+
+</div>
 
     </div>
 </div>
@@ -528,6 +552,18 @@
             <img src="1.jpg" class="gallery-item" onclick="viewPhoto(this)">
             <img src="2.jpg" class="gallery-item" onclick="viewPhoto(this)">
             <img src="3.jpg" class="gallery-item" onclick="viewPhoto(this)">
+            <img src="4.jpg" class="gallery-item" onclick="viewPhoto(this)">
+            <img src="5.jpg" class="gallery-item" onclick="viewPhoto(this)">
+            <img src="6.jpg" class="gallery-item" onclick="viewPhoto(this)">
+            <img src="7.jpg" class="gallery-item" onclick="viewPhoto(this)">
+            <img src="8.jpg" class="gallery-item" onclick="viewPhoto(this)">
+            <img src="9.jpg" class="gallery-item" onclick="viewPhoto(this)">
+            <img src="10.jpg" class="gallery-item" onclick="viewPhoto(this)">
+            <img src="11.jpg" class="gallery-item" onclick="viewPhoto(this)">
+            <img src="12.jpg" class="gallery-item" onclick="viewPhoto(this)">
+            <img src="13.jpg" class="gallery-item" onclick="viewPhoto(this)">
+            <img src="14.jpg" class="gallery-item" onclick="viewPhoto(this)">
+            <img src="15.jpg" class="gallery-item" onclick="viewPhoto(this)">
         </div>
     </div>
 </div>
