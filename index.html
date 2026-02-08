@@ -444,9 +444,10 @@
         <img src="winamp.png" alt="Winamp">
         <span>Winamp</span>
     </div>
-    <div class="icon" onclick="openAwards()">
+<div class="icon" onclick="openAwards(); openWindow('window-awards')">
     <img src="https://win98icons.alexmeub.com/icons/png/certificate-0.png" alt="Awards">
     <span>Awards.log</span>
+</div>
     
 </div>
     <div class="icon" onclick="triggerBSOD()">
@@ -609,6 +610,13 @@
             </div>
         </div>
             <div class="icq-message">
+            <img src="michael.jpg" class="icq-avatar">
+            <div>
+                <span class="icq-name">Kriper_prO_2006 <span style="color:red;">>>ПОМЕЧЕНО КАК СПАМ<<</span></span>
+                <span>Айлин, поздравляю тебя с днём рождения. Это конечно круто, 19 лет. Но знаешь что по настоящему круто? WAR THUNDER! War Thunder – это кросс-платформенная многопользовательская онлайн-игра посвященная боевой авиации, бронетехнике и флоту времен Второй мировой и Корейской войны.А по промокоду TIMUR ты получишь мощный немецкий бронированный танк MOUSE и 100 тысяч кредитов в подарок!</span>
+            </div>
+        </div>
+        <div class="icq-message">
             <img src="картинка" class="icq-avatar">
             <div>
                 <span class="icq-name">ник</span>
@@ -962,7 +970,7 @@
     ];
 
     function clippyTalk() {
-        unlockAchievement('hamster', 'ЗООПАРК', 'Вы потрогали хомяка. Он доволен.');
+        unlockAchievement('hamster', 'ЗООПАРК', 'ты потрогала хомяка. он доволен.');
         var bubble = document.getElementById('clippy-bubble');
         
         // Если пузырь скрыт - показываем новую фразу
@@ -1091,40 +1099,37 @@
     }
 
     // === ГЕНЕРАТОР ЖУРНАЛА (Красивый текст) ===
-    function openAwards() {
-        var content = document.getElementById('awards-content');
-        // Используем обратные кавычки ` ` для многострочного текста
-        var html = `=== SYSTEM AWARDS LOG ===
-User: Admin | Date: 14.02.2026
------------------------------
+   function openAwards() {
+    var content = document.getElementById('awards-content');
+    
+    // Начало лога
+    var html = `--- SYSTEM AWARDS LOG ---<br>`;
+    html += `User: Admin | Date: 14.02.2026<br><br>`;
 
-`;
+    var unlockedCount = 0;
 
-        var unlockedCount = 0;
-
-        allAwards.forEach(function(item) {
-            if (unlockedAchievements.includes(item.id)) {
-                // Если открыто
-                html += `[X] ${item.title}\n`;
-                html += `    >> ${item.desc}\n\n`;
-                unlockedCount++;
-            } else {
-                // Если закрыто
-                html += `[ ] ??? (LOCKED)\n`;
-                html += `    >> Секретное задание.\n\n`;
-            }
-        });
-
-        html += `-----------------------------
-TOTAL PROGRESS: ${unlockedCount} / ${allAwards.length}`;
-        
-        if (unlockedCount === allAwards.length) {
-             html += `\n\nSTATUS: ALL COMPLETE! ❤️`;
+    allAwards.forEach(function(item) {
+        if (unlockedAchievements.includes(item.id)) {
+            // Если ачивка открыта
+            html += `[X] ${item.title}<br>`;
+            html += `   >> ${item.desc}<br><br>`;
+            unlockedCount++;
+        } else {
+            // Если ачивка еще закрыта
+            html += `[ ] ??? (LOCKED)<br>`;
+            html += `   >> Секретное задание.<br><br>`;
         }
+    });
 
-        content.value = html; // Вставляем в textarea
-        openWindow('window-awards');
-    }
+    html += `--------------------------------<br>`;
+    html += `TOTAL PROGRESS: ${unlockedCount} / ${allAwards.length}<br><br>`;
+
+    // НАША ЛОВУШКА
+    html += `<br> >> P.S. Застряла? <a href="https://rutube.ru/video/f3b615db135287a64584737e664e1e4b/" target="_blank" style="color: blue; text-decoration: underline; cursor: pointer;">Нажми сюда</a> для подсказки.`;
+
+    // Применяем через innerHTML, чтобы ссылка и теги <br> заработали
+    content.innerHTML = html;
+}
     // === ФИНАЛ ИГРЫ ===
     function grandFinale() {
         // 1. Играем победный звук (можно тот же, что при входе, или салют)
@@ -1171,9 +1176,9 @@ TOTAL PROGRESS: ${unlockedCount} / ${allAwards.length}`;
     </div>
 
     <div class="window-body" style="background: white; padding: 0; height: 360px;">
-        <textarea id="awards-content" style="width: 100%; height: 100%; border: none; padding: 10px; font-family: 'Courier New', monospace; font-size: 13px; resize: none; outline: none; line-height: 1.4;" readonly>
-            Loading...
-        </textarea>
+    <div id="awards-content" style="width: 100%; height: 100%; background: white; color: black; padding: 10px; font-family: 'Courier New', monospace; font-size: 13px; overflow-y: auto; box-sizing: border-box; white-space: pre-wrap;">
+    Загрузка данных...
+    </div>
     </div>
 </div>
 <div id="white-space-overlay">
