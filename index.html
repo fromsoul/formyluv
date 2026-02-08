@@ -8,6 +8,16 @@
     <link rel="stylesheet" href="https://unpkg.com/xp.css">
 
     <style>
+    /* Подключение локального шрифта */
+@font-face {
+    font-family: 'OmoriFont'; /* Мы придумали это имя */
+    src: url('OMORI_GAME.ttf');    /* ТОЧНОЕ имя твоего файла */
+}
+
+/* Класс для использования этого шрифта */
+.omori-style {
+    font-family: 'OmoriFont', monospace;
+}
         /* === СТИЛЬ ДЛЯ МЕНЮ ПУСК === */
 .menu-item {
     padding: 10px;
@@ -296,6 +306,69 @@
     color: blue;
     display: block;
 }
+/* === OMORI WHITE SPACE (FIXED LAYOUT) === */
+#white-space-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffffff;
+    z-index: 999999;
+    display: none; /* Скрыто */
+    flex-direction: column; /* Элементы строго в столбик */
+    align-items: center; /* Всё по центру */
+    justify-content: flex-start; 
+    font-family: 'OmoriFont', monospace;
+    color: black;
+    cursor: crosshair;
+}
+
+/* Провод лампочки */
+.omori-wire {
+    width: 2px; /* Толщина провода */
+    height: 25vh; /* Длина провода (25% от экрана) */
+    background: black;
+    /* НАСТРОЙКА ПОЛОЖЕНИЯ ПРОВОДА: */
+    /* Меняй эти пиксели, чтобы двигать провод влево/вправо */
+    margin-left: -3px; 
+    margin-bottom: -3px; /* Чтобы склеился с лампочкой */
+}
+
+/* Картинки */
+.omori-img {
+    image-rendering: pixelated;
+    user-select: none;
+    display: block; /* Чтобы вели себя как блоки */
+}
+
+/* Текст */
+.omori-text {
+    margin-top: 40px; /* Отступ от лампочки */
+    margin-bottom: 40px; /* Отступ до кота */
+    font-size: 20px;
+    text-align: center;
+    line-height: 1.5;
+    animation: pulse 4s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
+
+/* Дверь - прибиваем к низу экрана */
+.white-door {
+    margin-top: auto; /* Авто-отступ сверху толкает дверь вниз */
+    margin-bottom: 50px; 
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.white-door:hover {
+    transform: scale(1.1);
+}
     </style>
 </head>
 <body>
@@ -374,11 +447,16 @@
     <div class="icon" onclick="openAwards()">
     <img src="https://win98icons.alexmeub.com/icons/png/certificate-0.png" alt="Awards">
     <span>Awards.log</span>
+    
 </div>
     <div class="icon" onclick="triggerBSOD()">
         <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png" alt="Danger">
         <span style="color: rgb(255, 255, 255); font-weight: bold;">не открывать</span>
     </div>
+</div>
+<div class="icon" onclick="enterWhiteSpace()">
+    <img src="LIGHT_BULB.webp" alt="Black Space" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.5);">
+    <span style="font-family: 'OmoriFont', monospace; font-size: 20px; margin-top: 5px;">white space.</span>
 </div>
     <div class="window window-popup" id="window-letter" style="max-width: 500px;">
     <div class="title-bar">
@@ -408,7 +486,7 @@
             <p><b> 8 миллиардов различных</b> <span style="color: red;">привычек</span>.</p>
             <p>весь этот мир огромен и шумен. <b>это не остановило судьбу от встречи с тобой.</b></p>
             <p>и всеми этими аналогиями, я пытаюсь сказать тебе спасибо. спасибо за то, что ты есть.</p>
-            <p>миру понадобилось 4,5 миллиарда лет, чтобы создать землю. и еще ровно <span style="color: #d81b60;">19<3</span>, чтобы довести её до совершенства, с помощью <span style="color: rgb(216, 68, 112);">тебя<3</span></p>
+            <p>миру понадобилось 4,5 миллиарда лет, чтобы создать землю. и еще ровно <span style="color: #d81b60;">19</span>, чтобы довести её до совершенства, с помощью <span style="color: rgb(216, 68, 112);">тебя<3</span></p>
             <p>резюмируя все вышесказанное, я хочу пожелать тебе оставаться такой же вселенски уникальной, чтобы удача всегда была на твоей стороне, и тебе с легкостью давались все все цели, которые ты себе поставишь.ну и самое главное, чтобы удача, принесла как можно больше счастья и радости в твою жизнь, и чтобы с каждым последующим годом, ее становилось все больше!</p>
             <p>сегодня великий день, просто, потому что он твой.</p>
             <br>
@@ -473,7 +551,7 @@
         
         <div class="icq-message">
             <img src="masha.jpg" class="icq-avatar"> <div>
-                <span class="icq-name">fromsoul</span>
+                <span class="icq-name">ПуЛи_От_БаБуЛи</span>
                 <span>с днюхой кисаааа&lt;3</span>
             </div>
         </div>
@@ -517,10 +595,10 @@
             </div>
         </div>
           <div class="icq-message">
-            <img src="картинка" class="icq-avatar">
+            <img src="hehehe.jpg" class="icq-avatar">
             <div>
-                <span class="icq-name">ник</span>
-                <span>сюда текст</span>
+                <span class="icq-name">}¦Скуff1d000n1y_Z003¦{</span>
+                <span>Поздравляю с днюхой! Желаю тебе счастья, удачи в начинаниях, сил и чтоб твои _n1ggers_ всегда были рядом</span>
             </div>
         </div>
           <div class="icq-message">
@@ -620,6 +698,65 @@
 
 
     <script>
+// === ЛОГИКА WHITE SPACE (ФИНАЛ) ===
+
+    function enterWhiteSpace() {
+        var overlay = document.getElementById('white-space-overlay');
+        
+        // ВОТ ОНО: Ищем плеер по его реальному имени из твоего кода
+        var player = document.getElementById('love-song'); 
+        
+        // 1. Показываем белый экран
+        if (overlay) {
+            overlay.style.display = 'flex';
+        }
+
+        // 2. Выключаем музыку
+        if (player) {
+            if (!player.paused) {
+                player.pause();
+                overlay.dataset.musicPaused = "true"; // Запоминаем, что выключили мы
+                console.log("Музыка (love-song) остановлена.");
+            } else {
+                overlay.dataset.musicPaused = "false";
+            }
+        } else {
+            // Если вдруг плеера нет (на всякий случай ищем запасной вариант)
+            console.log("Плеер love-song не найден, ищем audio-player...");
+            var backupPlayer = document.getElementById('audio-player');
+            if (backupPlayer && !backupPlayer.paused) {
+                backupPlayer.pause();
+                overlay.dataset.musicPaused = "true";
+            }
+        }
+
+        // 3. Ачивка
+        if (typeof unlockAchievement === "function") {
+            unlockAchievement('omori', 'DREAMER', 'добро пожаловать.');
+        }
+    }
+
+    function exitWhiteSpace() {
+        var overlay = document.getElementById('white-space-overlay');
+        var player = document.getElementById('love-song'); // Снова ищем правильный плеер
+
+        // 1. Скрываем экран
+        if (overlay) {
+            overlay.style.display = 'none';
+        
+            // 2. Включаем музыку обратно
+            if (overlay.dataset.musicPaused === "true") {
+                if (player) {
+                    player.play();
+                } else {
+                    // Запасной вариант
+                    var backupPlayer = document.getElementById('audio-player');
+                    if (backupPlayer) backupPlayer.play();
+                }
+                overlay.dataset.musicPaused = "false";
+            }
+        }
+    }
     // 1. Открыть окно
     function openWindow(id) {
         // Сначала закроем все остальные, чтобы не мешали
@@ -926,6 +1063,7 @@
         { id: 'secret7', title: 'РЕЖИМ БОГА',     desc: '7 кликов по часам. бесконечная любовь.' },// Если делали 7 кликов
          { id: 'music', title: 'МЕЛОМАН',     desc: 'слови этот день рожденный вайб!!!' },
          { id: 'readme', title: 'RTFM',     desc: 'сердце любовью обливается' },
+         {id: 'omori', title:'DREAMER',desc:'зачем тебе сюда?'}
     ];
 
     function unlockAchievement(id, title, description) {
@@ -1037,6 +1175,24 @@ TOTAL PROGRESS: ${unlockedCount} / ${allAwards.length}`;
             Loading...
         </textarea>
     </div>
+</div>
+<div id="white-space-overlay">
+    
+    <div class="omori-wire"></div>
+    
+    <img src="LIGHT_BULB2.png" class="omori-img" style="width: 80px; cursor: pointer;" onclick="alert('холодная.\nчерная.\nпустая.')">
+
+    <div class="omori-text">
+        Waiting for something to happen?
+    </div>
+
+    <img src="MEWO_SLEEP.webp" class="omori-img" style="width: 120px; margin-top: 40px; cursor: pointer;" 
+         title="Mewo" 
+         onclick="new Audio('MEOW.ogg').play()">
+
+    <img src="DOOR.webp" class="omori-img white-door" style="width: 60px;" onclick="exitWhiteSpace()" title="WAKE UP">
+
+</div>
 </div>
 </body>
 </html>
